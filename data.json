@@ -1,0 +1,176 @@
+{
+  "profile": {
+    "name": "Apna Naam Yahan",
+    "bio": "Welcome to my personal file sharing hub & portfolio. Browse study materials, apps, gallery and more!",
+    "avatarUrl": "",
+    "siteTitle": "My Portfolio",
+    "tagline": "Files & Resources Hub"
+  },
+
+  "social": [
+    { "label": "WhatsApp",  "icon": "fab fa-whatsapp",  "cls": "wa", "url": "https://wa.me/919219622604" },
+    { "label": "YouTube",   "icon": "fab fa-youtube",   "cls": "yt", "url": "https://youtube.com/@yourchannel" },
+    { "label": "Instagram", "icon": "fab fa-instagram", "cls": "ig", "url": "https://instagram.com/yourprofile" },
+    { "label": "Telegram",  "icon": "fab fa-telegram",  "cls": "tg", "url": "https://t.me/yourchannel" },
+    { "label": "GitHub",    "icon": "fab fa-github",    "cls": "gh", "url": "https://github.com/yourusername" },
+    { "label": "LinkedIn",  "icon": "fab fa-linkedin",  "cls": "li", "url": "https://linkedin.com/in/yourprofile" }
+  ],
+
+  "notice": {
+    "text": "👋 Welcome! Check out the latest study materials and apps uploaded this week.",
+    "postedAt": "2025-01-01T00:00:00.000Z",
+    "expiry": "never"
+  },
+
+  "study": {
+    "pdfs": [
+      {
+        "name": "Sample PDF File",
+        "size": "2.4 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/sample.pdf",
+        "icon": "📄"
+      },
+      {
+        "name": "Lecture Notes Chapter 1",
+        "size": "1.1 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/lecture1.pdf",
+        "icon": "📘"
+      }
+    ],
+    "notes": [
+      {
+        "name": "Chemistry Notes",
+        "size": "840 KB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/chemistry.pdf",
+        "icon": "🔬"
+      },
+      {
+        "name": "Math Formulas Sheet",
+        "size": "560 KB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/math.pdf",
+        "icon": "📐"
+      }
+    ]
+  },
+
+  "apps": {
+    "apps": [
+      {
+        "name": "Mod App v3.2",
+        "size": "18 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/modapp.apk",
+        "icon": "🚀",
+        "version": "v3.2"
+      },
+      {
+        "name": "Utility Tool",
+        "size": "5 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/utility.apk",
+        "icon": "🔧",
+        "version": "v1.0"
+      }
+    ],
+    "games": [
+      {
+        "name": "Arcade Game",
+        "size": "45 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/arcade.apk",
+        "icon": "🎮",
+        "version": "v2.1"
+      },
+      {
+        "name": "Puzzle Game",
+        "size": "22 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/puzzle.apk",
+        "icon": "🧩",
+        "version": "v1.5"
+      }
+    ]
+  },
+
+  "gallery": {
+    "video": [
+      {
+        "name": "Tutorial Video.mp4",
+        "size": "14 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/media/tutorial.mp4",
+        "thumb": ""
+      },
+      {
+        "name": "Demo Clip.mp4",
+        "size": "8 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/media/demo.mp4",
+        "thumb": ""
+      }
+    ],
+    "audio": [
+      {
+        "name": "Track 01.mp3",
+        "size": "4.2 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/media/track01.mp3"
+      },
+      {
+        "name": "Podcast Episode.mp3",
+        "size": "9.8 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/media/podcast.mp3"
+      }
+    ],
+    "picture": [
+      {
+        "name": "Photo 1.jpg",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/media/photo1.jpg",
+        "thumb": ""
+      },
+      {
+        "name": "Photo 2.jpg",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/media/photo2.jpg",
+        "thumb": ""
+      },
+      {
+        "name": "Photo 3.jpg",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/media/photo3.jpg",
+        "thumb": ""
+      }
+    ]
+  },
+
+  "folder": {
+    "files": [
+      {
+        "name": "Project Files.zip",
+        "size": "102 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/project.zip",
+        "type": "zip"
+      },
+      {
+        "name": "Ebook.epub",
+        "size": "3.1 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/ebook.epub",
+        "type": "doc"
+      },
+      {
+        "name": "Data Sheet.xlsx",
+        "size": "1.2 MB",
+        "url": "https://raw.githubusercontent.com/yourusername/yourrepo/main/files/data.xlsx",
+        "type": "doc"
+      }
+    ],
+    "links": [
+      {
+        "name": "Official Documentation",
+        "url": "https://docs.example.com",
+        "desc": "Documentation portal"
+      },
+      {
+        "name": "Useful Resource",
+        "url": "https://resource.example.com",
+        "desc": "Curated resource link"
+      },
+      {
+        "name": "My GitHub Profile",
+        "url": "https://github.com/yourusername",
+        "desc": "Source code & projects"
+      }
+    ]
+  }
+}

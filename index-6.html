@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>My Portfolio & Files</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <style>
+    /* ── DESIGN TOKENS ─────────────────────────────────── */
+    :root {
+      --wa-green:        #25D366;
+      --wa-green-dark:   #128C7E;
+      --wa-green-light:  #DCF8C6;
+      --wa-teal:         #075E54;
+      --bg-dark:         #111B21;
+      --bg-panel:        #1F2C33;
+      --bg-card:         #2A3942;
+      --bg-card2:        #233138;
+      --border:          #2D3E45;
+      --text-primary:    #E9EDEF;
+      --text-secondary:  #8696A0;
+      --text-muted:      #566771;
+      --accent:          #25D366;
+      --danger:          #FF5757;
+      --nav-h:           68px;
+      --top-h:           56px;
+      --radius:          14px;
+      --radius-sm:       8px;
+      --shadow:          0 4px 24px rgba(0,0,0,.45);
+      --trans:           all .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── RESET & BASE ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { border: none; cursor: pointer; font-family: inherit; background: none; }
+    img, video { max-width: 100%; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    /* ── TOP BAR ───────────────────────────────────────── */
+    #topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--top-h);
+      background: var(--wa-teal);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.4);
+    }
+    #topbar .brand {
+      display: flex; align-items: center; gap: 10px;
+    }
+    #topbar .brand .logo {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--wa-green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #fff;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.15);
+      font-family: 'Syne', sans-serif; font-weight: 800;
+    }
+    #topbar .brand h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: #fff; letter-spacing: .3px;
+    }
+    #topbar .brand span { font-size: .7rem; color: rgba(255,255,255,.6); display: block; margin-top: -2px; }
+    .topbar-actions { display: flex; gap: 2px; align-items: center; }
+    .topbar-actions button,
+    #topbar .brand > button {
+      color: rgba(255,255,255,.92) !important; font-size: 1.2rem;
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--trans); background: none; border: none;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .topbar-actions button:hover,
+    #topbar .brand > button:hover { background: rgba(255,255,255,.15) !important; color: #fff !important; }
+    .dot-menu-wrap { position: relative; display: flex; align-items: center; }
+
+    /* ── MAIN SCROLL AREA ──────────────────────────────── */
+    #main {
+      padding-top: calc(var(--top-h) + 8px);
+      padding-bottom: calc(var(--nav-h) + 12px);
+      min-height: 100svh;
+    }
+
+    /* ── TAB PAGES ─────────────────────────────────────── */
+    .tab-page { display: none; animation: fadeUp .28s ease; }
+    .tab-page.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION HEADER ────────────────────────────────── */
+    .section-header {
+      padding: 18px 18px 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: .72rem; font-weight: 700;
+      color: var(--wa-green);
+      letter-spacing: 1.2px; text-transform: uppercase;
+    }
+
+    /* ── SUB-TAB PILLS ─────────────────────────────────── */
+    .sub-tabs {
+      display: flex; gap: 8px;
+      padding: 10px 16px 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .sub-tabs::-webkit-scrollbar { display: none; }
+    .sub-tab-btn {
+      padding: 7px 18px;
+      border-radius: 99px;
+      font-size: .82rem; font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      white-space: nowrap;
+      transition: var(--trans);
+    }
+    .sub-tab-btn.active {
+      background: var(--wa-green);
+      color: #fff; border-color: var(--wa-green);
+      box-shadow: 0 2px 12px rgba(37,211,102,.3);
+    }
+
+    /* ── CARDS ─────────────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 12px; padding: 14px 16px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--trans);
+      cursor: pointer;
+      position: relative;
+    }
+    .card:hover { transform: translateY(-3px); border-color: var(--wa-green); box-shadow: 0 6px 20px rgba(37,211,102,.15); }
+    .card .thumb {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--bg-card2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; overflow: hidden;
+      position: relative;
+    }
+    .card .thumb img, .card .thumb video {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .card .card-body { padding: 10px 12px 12px; }
+    .card .card-title { font-size: .83rem; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card .card-meta { font-size: .72rem; color: var(--text-muted); }
+    .card .card-actions {
+      display: flex; gap: 6px; margin-top: 8px;
+    }
+    .btn-sm {
+      flex: 1; padding: 6px 0;
+      border-radius: var(--radius-sm);
+      font-size: .75rem; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      transition: var(--trans);
+    }
+    .btn-sm.primary { background: var(--wa-green); color: #fff; }
+    .btn-sm.primary:hover { background: var(--wa-green-dark); }
+    .btn-sm.secondary { background: var(--bg-panel); color: var(--text-secondary); border: 1px solid var(--border); }
+    .btn-sm.secondary:hover { border-color: var(--wa-green); color: var(--wa-green); }
+
+    /* Full-width list cards */
+    .list-card {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 16px 10px;
+      cursor: pointer; transition: var(--trans);
+    }
+    .list-card:hover { border-color: var(--wa-green); background: var(--bg-card2); }
+    .list-card .icon-box {
+      width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .list-card .info { flex: 1; min-width: 0; }
+    .list-card .info .name { font-size: .88rem; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .list-card .info .meta { font-size: .74rem; color: var(--text-muted); }
+    .list-card .actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; color: var(--text-secondary);
+      background: var(--bg-panel); border: 1px solid var(--border);
+      transition: var(--trans);
+    }
+    .icon-btn:hover { background: var(--wa-green); color: #fff; border-color: var(--wa-green); }
+
+    /* ── HOME TAB ──────────────────────────────────────── */
+    .home-hero {
+      position: relative; overflow: hidden;
+      padding: 28px 20px 24px;
+      background: linear-gradient(135deg, var(--wa-teal) 0%, var(--bg-panel) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .home-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(37,211,102,.18) 0%, transparent 60%);
+    }
+    .home-hero .avatar {
+      width: 82px; height: 82px; border-radius: 50%;
+      background: var(--wa-green);
+      border: 3px solid rgba(255,255,255,.25);
+      box-shadow: 0 0 0 6px rgba(37,211,102,.18);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: #fff;
+      margin-bottom: 14px; position: relative; z-index: 1;
+      overflow: hidden;
+    }
+    .home-hero .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .home-hero h2 {
+      font-family: 'Syne', sans-serif; font-size: 1.45rem; font-weight: 800;
+      position: relative; z-index: 1;
+    }
+    .home-hero p { font-size: .88rem; color: rgba(255,255,255,.7); margin-top: 5px; line-height: 1.55; position: relative; z-index: 1; }
+    .home-hero .status-dot {
+      display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+      background: var(--wa-green); margin-right: 6px;
+      box-shadow: 0 0 6px var(--wa-green);
+    }
+    .online-txt { font-size: .78rem; color: var(--wa-green); display: flex; align-items: center; margin-top: 8px; position: relative; z-index: 1; }
+
+    /* Notice board */
+    .notice-board {
+      margin: 16px; border-radius: var(--radius);
+      background: linear-gradient(135deg, #1a3a2e 0%, #1a2e38 100%);
+      border: 1px solid rgba(37,211,102,.25);
+      padding: 16px;
+      position: relative; overflow: hidden;
+    }
+    .notice-board::before {
+      content: ''; position: absolute; top: -20px; right: -20px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(37,211,102,.07);
+    }
+    .notice-board .nb-header {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .75rem; font-weight: 700; color: var(--wa-green);
+      text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px;
+    }
+    .notice-board .nb-text {
+      font-size: .87rem; line-height: 1.6; color: var(--text-primary);
+      min-height: 40px;
+    }
+    .notice-board .nb-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 12px; font-size: .72rem; color: var(--text-muted);
+    }
+    .nb-expires { display: flex; align-items: center; gap: 5px; }
+    .nb-expires .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--wa-green); }
+
+    /* Social icons */
+    .social-row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      padding: 0 16px 16px;
+    }
+    .social-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 99px;
+      font-size: .8rem; font-weight: 600;
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      transition: var(--trans);
+    }
+    .social-btn i { font-size: 1rem; }
+    .social-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .social-btn.wa { border-color: #25D366; color: #25D366; }
+    .social-btn.wa:hover { background: #25D366; color: #fff; }
+    .social-btn.yt { border-color: #FF0000; color: #FF0000; }
+    .social-btn.yt:hover { background: #FF0000; color: #fff; }
+    .social-btn.ig { border-color: #E1306C; color: #E1306C; }
+    .social-btn.ig:hover { background: #E1306C; color: #fff; }
+    .social-btn.tg { border-color: #2AABEE; color: #2AABEE; }
+    .social-btn.tg:hover { background: #2AABEE; color: #fff; }
+    .social-btn.gh { border-color: var(--text-secondary); color: var(--text-secondary); }
+    .social-btn.gh:hover { background: var(--text-primary); color: var(--bg-dark); border-color: var(--text-primary); }
+    .social-btn.li { border-color: #0077B5; color: #0077B5; }
+    .social-btn.li:hover { background: #0077B5; color: #fff; }
+
+    .wa-cta {
+      margin: 0 16px 16px;
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      background: var(--wa-green);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      font-size: .95rem; font-weight: 700;
+      letter-spacing: .2px;
+      box-shadow: 0 4px 18px rgba(37,211,102,.35);
+      transition: var(--trans);
+    }
+    .wa-cta:hover { background: var(--wa-green-dark); box-shadow: 0 6px 22px rgba(37,211,102,.45); }
+    .wa-cta i { font-size: 1.2rem; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 10px; padding: 0 16px 16px;
+    }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 12px;
+      text-align: center; transition: var(--trans);
+    }
+    .stat-card:hover { border-color: var(--wa-green); }
+    .stat-card .val { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--wa-green); }
+    .stat-card .lbl { font-size: .7rem; color: var(--text-muted); margin-top: 3px; }
+
+    /* ── GALLERY ───────────────────────────────────────── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 3px; padding: 10px 3px;
+    }
+    .gallery-item {
+      aspect-ratio: 1; background: var(--bg-card2);
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .gallery-item img, .gallery-item video {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .3s;
+    }
+    .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.06); }
+    .gallery-item .play-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.3);
+    }
+    .gallery-item .play-overlay i { font-size: 2rem; color: rgba(255,255,255,.9); }
+    .gallery-item .file-icon {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 6px;
+    }
+    .gallery-item .file-icon i { font-size: 2rem; }
+    .gallery-item .file-icon span { font-size: .7rem; color: var(--text-muted); padding: 0 6px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
+
+    /* ── LIGHTBOX ──────────────────────────────────────── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,.92);
+      flex-direction: column; align-items: center; justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox .lb-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      color: #fff; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: var(--trans);
+    }
+    #lightbox .lb-close:hover { background: var(--danger); }
+    #lightbox img, #lightbox video, #lightbox audio {
+      max-width: 94vw; max-height: 78vh; border-radius: var(--radius);
+    }
+    #lightbox audio { width: 88vw; margin-top: 40px; }
+    #lightbox .lb-title { margin-top: 14px; font-size: .88rem; color: rgba(255,255,255,.7); }
+    .lb-actions {
+      display: flex; gap: 12px; margin-top: 16px;
+    }
+    .lb-btn {
+      padding: 9px 22px; border-radius: 99px;
+      font-size: .82rem; font-weight: 600;
+      display: flex; align-items: center; gap: 7px;
+      transition: var(--trans);
+    }
+    .lb-btn.dl { background: var(--wa-green); color: #fff; }
+    .lb-btn.cl { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+
+    /* ── LINKS ─────────────────────────────────────────── */
+    .link-card {
+      margin: 0 16px 10px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 16px;
+      display: flex; align-items: center; gap: 14px;
+      cursor: pointer; transition: var(--trans);
+    }
+    .link-card:hover { border-color: var(--wa-green); transform: translateX(4px); }
+    .link-card .link-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--bg-panel); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--wa-green); flex-shrink: 0;
+    }
+    .link-card .link-info { flex: 1; min-width: 0; }
+    .link-card .link-info .ln { font-size: .87rem; font-weight: 600; }
+    .link-card .link-info .lu { font-size: .72rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .link-card .ext-icon { color: var(--text-muted); font-size: .85rem; }
+
+    /* ── BOTTOM NAV ────────────────────────────────────── */
+    #bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 4px 4px;
+      box-shadow: 0 -4px 24px rgba(0,0,0,.35);
+    }
+    .nav-item {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px; padding: 6px 4px;
+      border-radius: 12px;
+      cursor: pointer; transition: var(--trans);
+      position: relative; -webkit-tap-highlight-color: transparent;
+    }
+    .nav-item i {
+      font-size: 1.3rem; color: var(--text-muted);
+      transition: var(--trans);
+      display: block; line-height: 1;
+    }
+    .nav-item span {
+      font-size: .62rem; font-weight: 600; color: var(--text-muted);
+      transition: var(--trans); letter-spacing: .2px;
+    }
+    .nav-item.active i, .nav-item.active span { color: var(--wa-green); }
+    .nav-item.active { background: rgba(37,211,102,.08); }
+    .nav-item:active { transform: scale(.93); }
+
+    /* Center HOME button */
+    .nav-item.home-btn {
+      position: relative; margin-top: -12px;
+    }
+    .nav-item.home-btn .home-circle {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--wa-teal);
+      border: 3px solid var(--bg-panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,.35);
+      transition: var(--trans);
+    }
+    .nav-item.home-btn .home-circle {
+      width: 54px; height: 54px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .nav-item.home-btn.active .home-circle {
+      background: var(--wa-green);
+      box-shadow: 0 4px 20px rgba(37,211,102,.55);
+    }
+    .nav-item.home-btn.active i { color: #fff; }
+    .nav-item.home-btn > span { margin-top: 4px; font-size: .62rem; font-weight: 600; color: var(--text-muted); }
+
+    /* ── ADMIN PANEL ───────────────────────────────────── */
+    #admin-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.7); backdrop-filter: blur(6px);
+      align-items: flex-end; justify-content: center;
+    }
+    #admin-overlay.open { display: flex; }
+    .admin-sheet {
+      background: var(--bg-panel);
+      border-radius: 20px 20px 0 0;
+      border: 1px solid var(--border);
+      padding: 20px;
+      width: 100%; max-width: 560px;
+      animation: slideUp .3s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    .admin-sheet h3 {
+      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    }
+    .admin-sheet h3 i { color: var(--wa-green); }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: .78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; }
+    .form-group textarea, .form-group select, .form-group input {
+      width: 100%; background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: .87rem;
+      padding: 10px 13px; resize: none; transition: var(--trans);
+    }
+    .form-group textarea:focus, .form-group select:focus, .form-group input:focus {
+      outline: none; border-color: var(--wa-green);
+      box-shadow: 0 0 0 3px rgba(37,211,102,.12);
+    }
+    .form-group textarea { min-height: 90px; }
+    .form-group select option { background: var(--bg-card); }
+    .admin-actions { display: flex; gap: 10px; margin-top: 6px; }
+    .btn-full {
+      flex: 1; padding: 12px;
+      border-radius: var(--radius-sm);
+      font-size: .88rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: var(--trans);
+    }
+    .btn-full.primary { background: var(--wa-green); color: #fff; }
+    .btn-full.primary:hover { background: var(--wa-green-dark); }
+    .btn-full.cancel { background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border); }
+    .btn-full.cancel:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* Admin PIN gate */
+    #pin-gate {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,.85); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center;
+    }
+    #pin-gate.open { display: flex; }
+    .pin-box {
+      background: var(--bg-panel); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px 24px;
+      width: 92%; max-width: 340px; text-align: center;
+      animation: fadeUp .3s ease;
+    }
+    .pin-box i.lock { font-size: 2.5rem; color: var(--wa-green); margin-bottom: 12px; }
+    .pin-box h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; margin-bottom: 6px; }
+    .pin-box p { font-size: .8rem; color: var(--text-muted); margin-bottom: 20px; }
+    .pin-input {
+      display: flex; gap: 10px; justify-content: center; margin-bottom: 18px;
+    }
+    .pin-input input {
+      width: 46px; height: 52px; border-radius: 10px;
+      background: var(--bg-card); border: 2px solid var(--border);
+      color: var(--text-primary); font-size: 1.4rem; font-weight: 700;
+      text-align: center; transition: var(--trans);
+    }
+    .pin-input input:focus { outline: none; border-color: var(--wa-green); }
+    .pin-error { color: var(--danger); font-size: .8rem; margin-bottom: 10px; display: none; }
+
+    /* ── TOAST ─────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: calc(var(--nav-h) + 16px); left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-primary); font-size: .83rem; font-weight: 500;
+      padding: 10px 20px; border-radius: 99px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+      opacity: 0; transition: all .3s ease; z-index: 500;
+      white-space: nowrap; pointer-events: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #toast i { color: var(--wa-green); }
+
+    /* ── EMPTY STATE ───────────────────────────────────── */
+    .empty-state {
+      text-align: center; padding: 50px 20px;
+      color: var(--text-muted);
+    }
+    .empty-state i { font-size: 3rem; margin-bottom: 14px; opacity: .4; }
+    .empty-state p { font-size: .88rem; }
+
+    /* ── SEARCH BAR (top) ──────────────────────────────── */
+    .search-bar {
+      margin: 10px 16px;
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: 99px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 16px; transition: var(--trans);
+    }
+    .search-bar:focus-within { border-color: var(--wa-green); box-shadow: 0 0 0 3px rgba(37,211,102,.1); }
+    .search-bar i { color: var(--text-muted); font-size: .9rem; }
+    .search-bar input {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .88rem;
+    }
+    .search-bar input::placeholder { color: var(--text-muted); }
+
+    /* ── THREE-DOT DROPDOWN ────────────────────────────── */
+    .dot-menu-wrap { position: relative; }
+    #dot-dropdown {
+      display: none; position: fixed;
+      top: calc(var(--top-h) + 4px); right: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      min-width: 210px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.7);
+      z-index: 9999;
+      overflow: hidden;
+      animation: fadeUp .18s ease;
+    }
+    #dot-dropdown.open { display: block; }
+    .dd-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 18px;
+      font-size: .87rem; font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer; transition: var(--trans);
+      border-bottom: 1px solid var(--border);
+    }
+    .dd-item:last-child { border-bottom: none; }
+    .dd-item:hover { background: var(--bg-panel); color: var(--wa-green); }
+    .dd-item i { width: 18px; text-align: center; color: var(--wa-green); font-size: .9rem; }
+    .dd-divider {
+      height: 1px; background: var(--border);
+      margin: 2px 0;
+    }
+    .dd-label {
+      padding: 7px 18px 4px;
+      font-size: .68rem; font-weight: 700;
+      color: var(--text-muted); letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
+    /* ── SIDE DRAWER ───────────────────────────────────── */
+    #side-drawer-overlay {
+      display: none; position: fixed; inset: 0; z-index: 190;
+      background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+    }
+    #side-drawer-overlay.open { display: block; }
+    #side-drawer {
+      position: fixed; top: 0; left: -280px; bottom: 0;
+      width: 272px; z-index: 195;
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      transition: left .28s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    #side-drawer.open { left: 0; }
+    .drawer-head {
+      background: var(--wa-teal);
+      padding: 42px 20px 18px;
+      position: relative;
+    }
+    .drawer-head .d-avatar {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: var(--wa-green);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+      color: #fff; margin-bottom: 12px;
+      border: 2px solid rgba(255,255,255,.2);
+      overflow: hidden;
+    }
+    .drawer-head .d-avatar img { width:100%;height:100%;object-fit:cover; }
+    .drawer-head h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .drawer-head p { font-size: .75rem; color: rgba(255,255,255,.65); margin-top: 2px; }
+    .drawer-nav { flex: 1; padding: 10px 0; }
+    .drawer-nav-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 20px;
+      font-size: .9rem; font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer; transition: var(--trans);
+      border-radius: 0;
+    }
+    .drawer-nav-item:hover, .drawer-nav-item.active-dr {
+      background: rgba(37,211,102,.1);
+      color: var(--wa-green);
+    }
+    .drawer-nav-item i {
+      width: 22px; text-align: center;
+      font-size: 1rem; color: var(--wa-green);
+    }
+    .drawer-sep {
+      height: 1px; background: var(--border);
+      margin: 6px 20px;
+    }
+    .drawer-footer {
+      padding: 14px 20px;
+      font-size: .72rem; color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (min-width: 480px) {
+      .gallery-grid { grid-template-columns: repeat(4,1fr); }
+    }
+    @media (min-width: 640px) {
+      .card-grid { grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); }
+      .gallery-grid { grid-template-columns: repeat(5,1fr); }
+    }
+    @media (min-width: 768px) {
+      body { max-width: 520px; margin: 0 auto; }
+      #topbar, #bottom-nav { max-width: 520px; left: 50%; transform: translateX(-50%); right: auto; width: 520px; }
+    }
+
+    /* ── FILE TYPE COLORS ──────────────────────────────── */
+    .ft-pdf { background: rgba(255,87,87,.15); color: #FF5757; }
+    .ft-doc { background: rgba(37,211,102,.12); color: var(--wa-green); }
+    .ft-zip { background: rgba(255,193,7,.12); color: #FFC107; }
+    .ft-img { background: rgba(100,181,246,.12); color: #64B5F6; }
+    .ft-vid { background: rgba(206,147,216,.12); color: #CE93D8; }
+    .ft-aud { background: rgba(255,167,38,.12); color: #FFA726; }
+    .ft-apk { background: rgba(129,199,132,.12); color: #81C784; }
+    .ft-lnk { background: rgba(37,211,102,.12); color: var(--wa-green); }
+
+    /* ── NAV ICON DUAL (FA + emoji fallback) ──────────── */
+    .nav-icon { position: relative; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; }
+    .nav-icon i { font-size: 1.3rem; color: var(--text-muted); transition: var(--trans); }
+    .nav-icon em { display: none; font-style: normal; font-size: 1.3rem; line-height: 1; }
+    /* show emoji if FA fails (font not loaded) */
+    .nav-icon i.fa-fallback-hidden { display: none; }
+    .nav-item.active .nav-icon i { color: var(--wa-green); }
+    .home-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .home-icon i, .home-icon em { font-size: 1.35rem; color: rgba(255,255,255,.9); }
+    .nav-item.home-btn.active .home-icon i { color: #fff; }
+    /* topbar hamburger always visible */
+    #hamburger-btn { color: rgba(255,255,255,.95) !important; font-size: 1.25rem !important; }
+  </style>
+</head>
+<body>
+
+<!-- ══ TOP BAR ══════════════════════════════════════════ -->
+<div id="topbar">
+  <div class="brand">
+    <button onclick="openDrawer()" title="Menu" style="margin-right:2px;color:rgba(255,255,255,.92);font-size:1.2rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="logo" id="topbar-logo">A</div>
+    <div>
+      <h1 id="site-name">My Portfolio</h1>
+      <span id="site-tagline">Files & Resources Hub</span>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <button onclick="openSearch()" title="Search"><i class="fas fa-search"></i></button>
+    <div class="dot-menu-wrap">
+      <button onclick="toggleDotMenu(event)" title="More options" id="dot-btn">
+        <i class="fas fa-ellipsis-vertical"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- THREE-DOT DROPDOWN -->
+<div id="dot-dropdown">
+  <div class="dd-label">Navigate</div>
+  <div class="dd-item" onclick="switchTab('study');closeDotMenu()">
+    <i class="fas fa-book-open"></i> Study Material
+  </div>
+  <div class="dd-item" onclick="switchTab('apps');closeDotMenu()">
+    <i class="fas fa-rocket"></i> Apps &amp; Games
+  </div>
+  <div class="dd-item" onclick="switchTab('gallery');closeDotMenu()">
+    <i class="fas fa-photo-film"></i> Gallery
+  </div>
+  <div class="dd-item" onclick="switchTab('folder');closeDotMenu()">
+    <i class="fas fa-folder-open"></i> Files &amp; Links
+  </div>
+  <div class="dd-item" onclick="switchTab('home');closeDotMenu()">
+    <i class="fas fa-user-circle"></i> About Me
+  </div>
+  <div class="dd-divider"></div>
+  <div class="dd-item" onclick="closeDotMenu();openAdminGate()">
+    <i class="fas fa-shield-halved"></i> Admin Panel
+  </div>
+</div>
+
+<!-- ══ SIDE DRAWER ══════════════════════════════════════ -->
+<div id="side-drawer-overlay" onclick="closeDrawer()"></div>
+<div id="side-drawer">
+  <div class="drawer-head">
+    <div class="d-avatar" id="drawer-avatar">A</div>
+    <h3 id="drawer-name">Admin Name</h3>
+    <p id="drawer-bio">Files & Resources Hub</p>
+  </div>
+  <nav class="drawer-nav">
+    <div class="drawer-nav-item active-dr" onclick="switchTab('home');closeDrawer()" id="dr-home">
+      <i class="fas fa-house"></i> Home
+    </div>
+    <div class="drawer-nav-item" onclick="switchTab('study');closeDrawer()" id="dr-study">
+      <i class="fas fa-book-open"></i> Study Material
+    </div>
+    <div class="drawer-nav-item" onclick="switchTab('apps');closeDrawer()" id="dr-apps">
+      <i class="fas fa-rocket"></i> Apps &amp; Games
+    </div>
+    <div class="drawer-nav-item" onclick="switchTab('gallery');closeDrawer()" id="dr-gallery">
+      <i class="fas fa-photo-film"></i> Gallery
+    </div>
+    <div class="drawer-nav-item" onclick="switchTab('folder');closeDrawer()" id="dr-folder">
+      <i class="fas fa-folder-open"></i> Folder &amp; Links
+    </div>
+    <div class="drawer-sep"></div>
+    <div class="drawer-nav-item" onclick="closeDrawer();openAdminGate()">
+      <i class="fas fa-shield-halved"></i> Admin Panel
+    </div>
+    <div class="drawer-nav-item" href="https://wa.me/919219622604" onclick="window.open('https://wa.me/919219622604','_blank');closeDrawer()">
+      <i class="fab fa-whatsapp"></i> WhatsApp Me
+    </div>
+  </nav>
+  <div class="drawer-footer">Built with ❤️ · Powered by GitHub</div>
+</div>
+
+<!-- ══ MAIN ════════════════════════════════════════════ -->
+<div id="main">
+
+  <!-- ── HOME ──────────────────────────────────────── -->
+  <div id="tab-home" class="tab-page active">
+    <div class="home-hero">
+      <div class="avatar" id="hero-avatar">A</div>
+      <h2 id="hero-name">Admin Name</h2>
+      <p id="hero-bio">Welcome to my personal file sharing hub & portfolio. Browse study materials, apps, gallery and more!</p>
+      <div class="online-txt"><span class="status-dot"></span> Online</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row" style="margin-top:14px;">
+      <div class="stat-card"><div class="val" id="stat-files">0</div><div class="lbl">Files</div></div>
+      <div class="stat-card"><div class="val" id="stat-links">0</div><div class="lbl">Links</div></div>
+      <div class="stat-card"><div class="val" id="stat-media">0</div><div class="lbl">Media</div></div>
+    </div>
+
+    <!-- Notice Board -->
+    <div class="notice-board">
+      <div class="nb-header"><i class="fas fa-bullhorn"></i> Notice Board</div>
+      <div class="nb-text" id="notice-text">Loading notice...</div>
+      <div class="nb-footer">
+        <div class="nb-expires">
+          <span class="dot"></span>
+          <span id="notice-expiry-label">—</span>
+        </div>
+        <span id="notice-posted-at"></span>
+      </div>
+    </div>
+
+    <!-- WhatsApp CTA -->
+    <a class="wa-cta" href="https://wa.me/919219622604" target="_blank" rel="noopener">
+      <i class="fab fa-whatsapp"></i> Message Me on WhatsApp
+    </a>
+
+    <!-- Social Buttons -->
+    <div class="section-header">Connect With Me</div>
+    <div class="social-row" id="social-links">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- ── STUDY MATERIAL ────────────────────────────── -->
+  <div id="tab-study" class="tab-page">
+    <div class="sub-tabs">
+      <button class="sub-tab-btn active" onclick="switchSub(this,'study','pdfs')">
+        <i class="fas fa-file-pdf"></i> PDFs
+      </button>
+      <button class="sub-tab-btn" onclick="switchSub(this,'study','notes')">
+        <i class="fas fa-sticky-note"></i> Notes
+      </button>
+    </div>
+    <div id="study-pdfs-panel">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search PDFs…" oninput="filterList(this,'study-pdfs-list')" />
+      </div>
+      <div id="study-pdfs-list"></div>
+    </div>
+    <div id="study-notes-panel" style="display:none">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search Notes…" oninput="filterList(this,'study-notes-list')" />
+      </div>
+      <div id="study-notes-list"></div>
+    </div>
+  </div>
+
+  <!-- ── APPS & GAMES ──────────────────────────────── -->
+  <div id="tab-apps" class="tab-page">
+    <div class="sub-tabs">
+      <button class="sub-tab-btn active" onclick="switchSub(this,'apps','apps')">
+        <i class="fas fa-rocket"></i> Apps
+      </button>
+      <button class="sub-tab-btn" onclick="switchSub(this,'apps','games')">
+        <i class="fas fa-gamepad"></i> Games
+      </button>
+    </div>
+    <div id="apps-apps-panel">
+      <div id="apps-apps-list" style="padding:10px 0;"></div>
+    </div>
+    <div id="apps-games-panel" style="display:none">
+      <div id="apps-games-list" style="padding:10px 0;"></div>
+    </div>
+  </div>
+
+  <!-- ── GALLERY ───────────────────────────────────── -->
+  <div id="tab-gallery" class="tab-page">
+    <div class="sub-tabs">
+      <button class="sub-tab-btn active" onclick="switchSub(this,'gallery','video')">
+        <i class="fas fa-film"></i> Video
+      </button>
+      <button class="sub-tab-btn" onclick="switchSub(this,'gallery','audio')">
+        <i class="fas fa-music"></i> Audio
+      </button>
+      <button class="sub-tab-btn" onclick="switchSub(this,'gallery','picture')">
+        <i class="fas fa-images"></i> Picture
+      </button>
+    </div>
+    <div id="gallery-video-panel">
+      <div class="gallery-grid" id="gallery-video-list"></div>
+    </div>
+    <div id="gallery-audio-panel" style="display:none">
+      <div id="gallery-audio-list" style="padding:10px 0;"></div>
+    </div>
+    <div id="gallery-picture-panel" style="display:none">
+      <div class="gallery-grid" id="gallery-picture-list"></div>
+    </div>
+  </div>
+
+  <!-- ── FOLDER & LINKS ────────────────────────────── -->
+  <div id="tab-folder" class="tab-page">
+    <div class="sub-tabs">
+      <button class="sub-tab-btn active" onclick="switchSub(this,'folder','files')">
+        <i class="fas fa-folder"></i> Files
+      </button>
+      <button class="sub-tab-btn" onclick="switchSub(this,'folder','links')">
+        <i class="fas fa-link"></i> Links
+      </button>
+    </div>
+    <div id="folder-files-panel">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search files…" oninput="filterList(this,'folder-files-list')" />
+      </div>
+      <div id="folder-files-list"></div>
+    </div>
+    <div id="folder-links-panel" style="display:none">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search links…" oninput="filterList(this,'folder-links-list')" />
+      </div>
+      <div id="folder-links-list"></div>
+    </div>
+  </div>
+
+</div><!-- /#main -->
+
+<!-- ══ BOTTOM NAV ══════════════════════════════════════ -->
+<nav id="bottom-nav">
+  <div class="nav-item" onclick="switchTab('study')" id="nav-study">
+    <span class="nav-icon"><i class="fas fa-book-open"></i><em>📚</em></span>
+    <span>Study</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('apps')" id="nav-apps">
+    <span class="nav-icon"><i class="fas fa-rocket"></i><em>🚀</em></span>
+    <span>Apps</span>
+  </div>
+  <div class="nav-item home-btn active" onclick="switchTab('home')" id="nav-home">
+    <div class="home-circle">
+      <span class="nav-icon home-icon"><i class="fas fa-house"></i><em>🏠</em></span>
+    </div>
+    <span>Home</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('gallery')" id="nav-gallery">
+    <span class="nav-icon"><i class="fas fa-photo-film"></i><em>🖼️</em></span>
+    <span>Gallery</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('folder')" id="nav-folder">
+    <span class="nav-icon"><i class="fas fa-folder-open"></i><em>📁</em></span>
+    <span>Folder</span>
+  </div>
+</nav>
+
+<!-- ══ LIGHTBOX ════════════════════════════════════════ -->
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()"><i class="fas fa-xmark"></i></button>
+  <div id="lb-content"></div>
+  <p class="lb-title" id="lb-title"></p>
+  <div class="lb-actions" id="lb-actions"></div>
+</div>
+
+<!-- ══ ADMIN PIN GATE ══════════════════════════════════ -->
+<div id="pin-gate">
+  <div class="pin-box">
+    <i class="fas fa-lock lock"></i>
+    <h3>Admin Access</h3>
+    <p>Enter your 4-digit PIN to manage content</p>
+    <div class="pin-input">
+      <input type="password" maxlength="1" id="p1" oninput="pinNext(this,'p2')" onkeydown="pinBack(event,this,null)" />
+      <input type="password" maxlength="1" id="p2" oninput="pinNext(this,'p3')" onkeydown="pinBack(event,this,'p1')" />
+      <input type="password" maxlength="1" id="p3" oninput="pinNext(this,'p4')" onkeydown="pinBack(event,this,'p2')" />
+      <input type="password" maxlength="1" id="p4" oninput="pinNext(this,null)" onkeydown="pinBack(event,this,'p3')" />
+    </div>
+    <p class="pin-error" id="pin-error">Incorrect PIN. Try again.</p>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-full cancel" onclick="closePinGate()"><i class="fas fa-xmark"></i> Cancel</button>
+      <button class="btn-full primary" onclick="checkPin()"><i class="fas fa-unlock"></i> Enter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PANEL SHEET ════════════════════════════════ -->
+<div id="admin-overlay">
+  <div class="admin-sheet">
+    <h3><i class="fas fa-sliders"></i> Admin Panel</h3>
+
+    <div class="form-group">
+      <label>Notice Board Text</label>
+      <textarea id="ad-notice" placeholder="Enter notice message…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Auto-Delete After</label>
+      <select id="ad-expiry">
+        <option value="never">Never (Permanent)</option>
+        <option value="24h">24 Hours</option>
+        <option value="7d">1 Week</option>
+      </select>
+    </div>
+
+    <div class="section-header" style="padding:4px 0 10px;font-size:.7rem;">Profile Info</div>
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="ad-name" placeholder="Your display name" />
+    </div>
+    <div class="form-group">
+      <label>Bio / Tagline</label>
+      <input type="text" id="ad-bio" placeholder="Short bio…" />
+    </div>
+    <div class="form-group">
+      <label>Avatar URL (optional)</label>
+      <input type="url" id="ad-avatar" placeholder="https://…" />
+    </div>
+
+    <div class="admin-actions">
+      <button class="btn-full cancel" onclick="closeAdmin()"><i class="fas fa-xmark"></i> Cancel</button>
+      <button class="btn-full primary" onclick="saveAdmin()"><i class="fas fa-check"></i> Save</button>
+    </div>
+
+    <div style="margin-top:18px;padding:12px;background:var(--bg-card);border-radius:var(--radius-sm);border:1px solid var(--border);">
+      <p style="font-size:.75rem;color:var(--text-muted);line-height:1.6;">
+        <strong style="color:var(--wa-green);display:block;margin-bottom:4px;">📂 How to manage files:</strong>
+        Edit <code style="background:var(--bg-panel);padding:1px 5px;border-radius:4px;">data.json</code> on GitHub to add/remove files, links, and update the notice. The site reads this file on every load. No backend needed!
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ════════════════════════════════════════════ -->
+<div id="toast"><i class="fas fa-circle-check"></i> <span id="toast-msg">Done!</span></div>
+
+<!-- ══ SCRIPT ═══════════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────────────────────
+//  CONFIG — Edit this object OR point DATA_URL to your
+//  GitHub raw data.json URL for fully dynamic content.
+// ─────────────────────────────────────────────────────────
+const DATA_URL = null; // e.g. "https://raw.githubusercontent.com/you/repo/main/data.json"
+
+const DEFAULT_DATA = {
+  profile: {
+    name: "Admin Name",
+    bio: "Welcome to my personal file sharing hub & portfolio.",
+    avatarUrl: "",
+    siteTitle: "My Portfolio",
+    tagline: "Files & Resources Hub"
+  },
+  social: [
+    { label: "WhatsApp", icon: "fab fa-whatsapp", cls: "wa", url: "https://wa.me/919219622604" },
+    { label: "YouTube",  icon: "fab fa-youtube",  cls: "yt", url: "#" },
+    { label: "Instagram",icon: "fab fa-instagram",cls: "ig", url: "#" },
+    { label: "Telegram", icon: "fab fa-telegram", cls: "tg", url: "#" },
+    { label: "GitHub",   icon: "fab fa-github",   cls: "gh", url: "#" },
+    { label: "LinkedIn", icon: "fab fa-linkedin",  cls: "li", url: "#" }
+  ],
+  notice: {
+    text: "👋 Welcome! Check out the latest study materials and apps uploaded this week.",
+    postedAt: new Date().toISOString(),
+    expiry: "never"
+  },
+  study: {
+    pdfs: [
+      { name: "Sample PDF",       size: "2.4 MB", url: "#", icon: "📄" },
+      { name: "Lecture Notes 1",  size: "1.1 MB", url: "#", icon: "📘" }
+    ],
+    notes: [
+      { name: "Chemistry Notes",  size: "840 KB", url: "#", icon: "🔬" },
+      { name: "Math Formulas",    size: "560 KB", url: "#", icon: "📐" }
+    ]
+  },
+  apps: {
+    apps: [
+      { name: "Mod App v3.2", size: "18 MB", url: "#", icon: "🚀", version: "v3.2" },
+      { name: "Utility Tool",  size: "5 MB",  url: "#", icon: "🔧", version: "v1.0" }
+    ],
+    games: [
+      { name: "Arcade Game",  size: "45 MB", url: "#", icon: "🎮", version: "v2.1" },
+      { name: "Puzzle Game",  size: "22 MB", url: "#", icon: "🧩", version: "v1.5" }
+    ]
+  },
+  gallery: {
+    video: [
+      { name: "Tutorial.mp4",  thumb: "", url: "#", size: "14 MB" },
+      { name: "Demo Clip.mp4", thumb: "", url: "#", size: "8 MB"  }
+    ],
+    audio: [
+      { name: "Track 01.mp3",  url: "#", size: "4.2 MB" },
+      { name: "Podcast.mp3",   url: "#", size: "9.8 MB" }
+    ],
+    picture: [
+      { name: "Photo 1.jpg", url: "#", thumb: "" },
+      { name: "Photo 2.jpg", url: "#", thumb: "" },
+      { name: "Photo 3.jpg", url: "#", thumb: "" },
+      { name: "Photo 4.jpg", url: "#", thumb: "" }
+    ]
+  },
+  folder: {
+    files: [
+      { name: "Project.zip",    size: "102 MB", url: "#", type: "zip"  },
+      { name: "Ebook.epub",     size: "3.1 MB", url: "#", type: "doc"  },
+      { name: "Spreadsheet.xlsx", size: "1.2 MB", url: "#", type: "doc" }
+    ],
+    links: [
+      { name: "Official Docs",     url: "https://docs.example.com",   desc: "Documentation portal" },
+      { name: "Useful Resource 1", url: "https://resource.example.com",desc: "Curated resource" },
+      { name: "My GitHub Profile", url: "https://github.com",          desc: "Source code & projects" }
+    ]
+  }
+};
+
+// ─────────────────────────────────────────────────────────
+//  ADMIN PIN  (Change this to your secret 4-digit PIN)
+// ─────────────────────────────────────────────────────────
+const ADMIN_PIN = "1234";
+
+// ─────────────────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────────────────
+let DATA = {};
+let currentTab = 'home';
+
+// ─────────────────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────────────────
+async function init() {
+  if (DATA_URL) {
+    try {
+      const res = await fetch(DATA_URL);
+      if (res.ok) DATA = await res.json();
+      else DATA = DEFAULT_DATA;
+    } catch { DATA = DEFAULT_DATA; }
+  } else {
+    DATA = DEFAULT_DATA;
+  }
+
+  // Overlay local admin edits from localStorage
+  const ls = localStorage.getItem('adminOverlay');
+  if (ls) {
+    const ov = JSON.parse(ls);
+    if (ov.notice) DATA.notice = ov.notice;
+    if (ov.profile) DATA.profile = { ...DATA.profile, ...ov.profile };
+  }
+
+  applyNoticeExpiry();
+  renderProfile();
+  renderSocial();
+  renderStudy();
+  renderApps();
+  renderGallery();
+  renderFolder();
+  updateStats();
+}
+
+// ─────────────────────────────────────────────────────────
+//  NOTICE EXPIRY
+// ─────────────────────────────────────────────────────────
+function applyNoticeExpiry() {
+  const n = DATA.notice;
+  if (!n || !n.postedAt) return;
+
+  const posted = new Date(n.postedAt);
+  const now = new Date();
+  const ms = now - posted;
+  const h = ms / 3600000;
+
+  if (n.expiry === '24h' && h >= 24)       { DATA.notice.text = ''; DATA.notice.expiry = '_expired'; }
+  else if (n.expiry === '7d' && h >= 168)  { DATA.notice.text = ''; DATA.notice.expiry = '_expired'; }
+
+  const el = document.getElementById('notice-text');
+  const lb = document.getElementById('notice-expiry-label');
+  const pa = document.getElementById('notice-posted-at');
+  if (!el) return;
+
+  if (!n.text || n.expiry === '_expired') {
+    el.textContent = 'No active notice.';
+    lb.textContent = '—';
+    pa.textContent = '';
+    return;
+  }
+  el.textContent = n.text;
+  lb.textContent = n.expiry === 'never' ? 'Permanent' : n.expiry === '24h' ? 'Expires in 24h' : 'Expires in 1 week';
+  pa.textContent = posted.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+}
+
+// ─────────────────────────────────────────────────────────
+//  RENDER PROFILE
+// ─────────────────────────────────────────────────────────
+function renderProfile() {
+  const p = DATA.profile;
+  document.getElementById('hero-name').textContent = p.name || '';
+  document.getElementById('hero-bio').textContent = p.bio || '';
+  document.getElementById('site-name').textContent = p.siteTitle || 'My Portfolio';
+  document.getElementById('site-tagline').textContent = p.tagline || '';
+  const av = document.getElementById('hero-avatar');
+  const initial = (p.name || 'A')[0].toUpperCase();
+  if (p.avatarUrl) {
+    av.innerHTML = `<img src="${p.avatarUrl}" alt="avatar" onerror="this.style.display='none'" />`;
+  } else {
+    av.textContent = initial;
+  }
+  // topbar logo
+  document.getElementById('topbar-logo').textContent = initial;
+  // drawer
+  document.getElementById('drawer-name').textContent = p.name || 'Admin';
+  document.getElementById('drawer-bio').textContent = p.tagline || p.bio || '';
+  const dav = document.getElementById('drawer-avatar');
+  if (p.avatarUrl) {
+    dav.innerHTML = `<img src="${p.avatarUrl}" alt="avatar" onerror="this.style.display='none'" />`;
+  } else {
+    dav.textContent = initial;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  RENDER SOCIAL
+// ─────────────────────────────────────────────────────────
+function renderSocial() {
+  const cont = document.getElementById('social-links');
+  if (!DATA.social?.length) { cont.innerHTML = ''; return; }
+  cont.innerHTML = DATA.social.map(s =>
+    `<a class="social-btn ${s.cls}" href="${s.url}" target="_blank" rel="noopener">
+       <i class="${s.icon}"></i>${s.label}
+     </a>`
+  ).join('');
+}
+
+// ─────────────────────────────────────────────────────────
+//  RENDER STUDY
+// ─────────────────────────────────────────────────────────
+function renderStudy() {
+  renderFileList('study-pdfs-list',  DATA.study?.pdfs  || [], 'pdf');
+  renderFileList('study-notes-list', DATA.study?.notes || [], 'doc');
+}
+
+// ─────────────────────────────────────────────────────────
+//  RENDER APPS
+// ─────────────────────────────────────────────────────────
+function renderApps() {
+  renderAppList('apps-apps-list',  DATA.apps?.apps  || []);
+  renderAppList('apps-games-list', DATA.apps?.games || []);
+}
+
+function renderAppList(containerId, items) {
+  const cont = document.getElementById(containerId);
+  if (!items.length) { cont.innerHTML = emptyState('No items yet.'); return; }
+  cont.innerHTML = items.map(a => `
+    <div class="list-card" data-name="${a.name}">
+      <div class="icon-box ft-apk" style="font-size:1.6rem">${a.icon || '📦'}</div>
+      <div class="info">
+        <div class="name">${a.name}</div>
+        <div class="meta">${a.version || ''} &nbsp;·&nbsp; ${a.size || ''}</div>
+      </div>
+      <div class="actions">
+        <a href="${a.url}" download class="icon-btn" title="Download" onclick="toast('Downloading…')">
+          <i class="fas fa-download"></i>
+        </a>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─────────────────────────────────────────────────────────
+//  RENDER GALLERY
+// ─────────────────────────────────────────────────────────
+function renderGallery() {
+  const vl = document.getElementById('gallery-video-list');
+  const al = document.getElementById('gallery-audio-list');
+  const pl = document.getElementById('gallery-picture-list');
+
+  // Videos
+  const vids = DATA.gallery?.video || [];
+  vl.innerHTML = vids.length ? vids.map((v,i) => `
+    <div class="gallery-item" onclick="openLightbox('video','${encodeURIComponent(v.url)}','${encodeURIComponent(v.name)}')">
+      ${v.thumb
+        ? `<img src="${v.thumb}" alt="${v.name}" loading="lazy" />`
+        : `<div class="file-icon"><i class="fas fa-film" style="color:#CE93D8"></i><span>${v.name}</span></div>`}
+      <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+    </div>`).join('') : `<div class="empty-state"><i class="fas fa-film"></i><p>No videos yet.</p></div>`;
+
+  // Audio
+  const auds = DATA.gallery?.audio || [];
+  al.innerHTML = auds.length ? auds.map(a => `
+    <div class="list-card">
+      <div class="icon-box ft-aud"><i class="fas fa-music"></i></div>
+      <div class="info">
+        <div class="name">${a.name}</div>
+        <div class="meta">${a.size || ''}</div>
+      </div>
+      <div class="actions">
+        <button class="icon-btn" title="Play" onclick="openLightbox('audio','${encodeURIComponent(a.url)}','${encodeURIComponent(a.name)}')">
+          <i class="fas fa-play"></i>
+        </button>
+        <a href="${a.url}" download class="icon-btn" title="Download" onclick="toast('Downloading…')">
+          <i class="fas fa-download"></i>
+        </a>
+      </div>
+    </div>`).join('') : `<div class="empty-state"><i class="fas fa-music"></i><p>No audio files yet.</p></div>`;
+
+  // Pictures
+  const pics = DATA.gallery?.picture || [];
+  pl.innerHTML = pics.length ? pics.map(p => `
+    <div class="gallery-item" onclick="openLightbox('image','${encodeURIComponent(p.url)}','${encodeURIComponent(p.name)}')">
+      ${p.thumb || p.url !== '#'
+        ? `<img src="${p.thumb || p.url}" alt="${p.name}" loading="lazy" />`
+        : `<div class="file-icon"><i class="fas fa-image" style="color:#64B5F6"></i><span>${p.name}</span></div>`}
+    </div>`).join('') : `<div class="empty-state"><i class="fas fa-images"></i><p>No pictures yet.</p></div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  RENDER FOLDER
+// ─────────────────────────────────────────────────────────
+function renderFolder() {
+  renderFileList('folder-files-list', DATA.folder?.files || [], 'zip');
+
+  const ll = document.getElementById('folder-links-list');
+  const links = DATA.folder?.links || [];
+  ll.innerHTML = links.length ? links.map(l => `
+    <a class="link-card" href="${l.url}" target="_blank" rel="noopener" data-name="${l.name}">
+      <div class="link-icon"><i class="fas fa-link"></i></div>
+      <div class="link-info">
+        <div class="ln">${l.name}</div>
+        <div class="lu">${l.url}</div>
+      </div>
+      <i class="fas fa-arrow-up-right-from-square ext-icon"></i>
+    </a>`).join('') : emptyState('No links yet.');
+}
+
+// ─────────────────────────────────────────────────────────
+//  GENERIC FILE LIST RENDERER
+// ─────────────────────────────────────────────────────────
+function renderFileList(containerId, items, defaultType) {
+  const cont = document.getElementById(containerId);
+  if (!items.length) { cont.innerHTML = emptyState('No files yet.'); return; }
+  cont.innerHTML = items.map(f => {
+    const ft = f.type || defaultType;
+    const iconMap = { pdf:'fa-file-pdf', doc:'fa-file-lines', zip:'fa-file-zipper', img:'fa-file-image', vid:'fa-file-video', aud:'fa-file-audio', apk:'fa-mobile-screen' };
+    const ic = iconMap[ft] || 'fa-file';
+    return `
+    <div class="list-card" data-name="${f.name}">
+      <div class="icon-box ft-${ft}"><i class="fas ${ic}"></i></div>
+      <div class="info">
+        <div class="name">${f.name}</div>
+        <div class="meta">${f.size || ''}</div>
+      </div>
+      <div class="actions">
+        <a href="${f.url}" target="_blank" class="icon-btn" title="Preview">
+          <i class="fas fa-eye"></i>
+        </a>
+        <a href="${f.url}" download class="icon-btn" title="Download" onclick="toast('Downloading…')">
+          <i class="fas fa-download"></i>
+        </a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function emptyState(msg) {
+  return `<div class="empty-state"><i class="fas fa-box-open"></i><p>${msg}</p></div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  STATS
+// ─────────────────────────────────────────────────────────
+function updateStats() {
+  const files = (DATA.study?.pdfs?.length||0) + (DATA.study?.notes?.length||0)
+              + (DATA.apps?.apps?.length||0) + (DATA.apps?.games?.length||0)
+              + (DATA.folder?.files?.length||0);
+  const links = DATA.folder?.links?.length || 0;
+  const media = (DATA.gallery?.video?.length||0) + (DATA.gallery?.audio?.length||0)
+              + (DATA.gallery?.picture?.length||0);
+  document.getElementById('stat-files').textContent = files;
+  document.getElementById('stat-links').textContent = links;
+  document.getElementById('stat-media').textContent = media;
+}
+
+// ─────────────────────────────────────────────────────────
+//  SIDE DRAWER
+// ─────────────────────────────────────────────────────────
+function openDrawer() {
+  document.getElementById('side-drawer').classList.add('open');
+  document.getElementById('side-drawer-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  document.getElementById('side-drawer').classList.remove('open');
+  document.getElementById('side-drawer-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─────────────────────────────────────────────────────────
+//  THREE-DOT MENU
+// ─────────────────────────────────────────────────────────
+function toggleDotMenu(e) {
+  e.stopPropagation();
+  document.getElementById('dot-dropdown').classList.toggle('open');
+}
+function closeDotMenu() {
+  document.getElementById('dot-dropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#dot-dropdown') && !e.target.closest('#dot-btn')) {
+    closeDotMenu();
+  }
+});
+
+// ─────────────────────────────────────────────────────────
+//  TAB NAVIGATION
+// ─────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+  // sync drawer
+  document.querySelectorAll('.drawer-nav-item').forEach(d => d.classList.remove('active-dr'));
+  const dr = document.getElementById('dr-' + tab);
+  if (dr) dr.classList.add('active-dr');
+  currentTab = tab;
+}
+
+// ─────────────────────────────────────────────────────────
+//  SUB-TAB NAVIGATION
+// ─────────────────────────────────────────────────────────
+function switchSub(btn, tabName, subName) {
+  const siblings = btn.closest('.sub-tabs').querySelectorAll('.sub-tab-btn');
+  siblings.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Hide all panels for this tab, show target
+  const allPanels = document.querySelectorAll(`[id^="${tabName}-"][id$="-panel"]`);
+  allPanels.forEach(p => p.style.display = 'none');
+  document.getElementById(`${tabName}-${subName}-panel`).style.display = 'block';
+}
+
+// ─────────────────────────────────────────────────────────
+//  SEARCH / FILTER
+// ─────────────────────────────────────────────────────────
+function filterList(input, listId) {
+  const q = input.value.toLowerCase();
+  const items = document.getElementById(listId).querySelectorAll('[data-name]');
+  items.forEach(el => {
+    el.style.display = el.dataset.name.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+function openSearch() {
+  toast('Use the search bar inside each section!');
+}
+
+// ─────────────────────────────────────────────────────────
+//  LIGHTBOX
+// ─────────────────────────────────────────────────────────
+function openLightbox(type, encodedUrl, encodedName) {
+  const url  = decodeURIComponent(encodedUrl);
+  const name = decodeURIComponent(encodedName);
+  const lb   = document.getElementById('lightbox');
+  const cont = document.getElementById('lb-content');
+  const act  = document.getElementById('lb-actions');
+
+  document.getElementById('lb-title').textContent = name;
+
+  if (type === 'image') {
+    cont.innerHTML = `<img src="${url}" alt="${name}" />`;
+  } else if (type === 'video') {
+    cont.innerHTML = `<video controls autoplay src="${url}" style="max-width:94vw;max-height:72vh;border-radius:12px;"></video>`;
+  } else if (type === 'audio') {
+    cont.innerHTML = `<div style="text-align:center;padding:20px 0;">
+      <i class="fas fa-music" style="font-size:4rem;color:var(--wa-green);"></i>
+    </div>
+    <audio controls autoplay src="${url}"></audio>`;
+  }
+
+  act.innerHTML = `
+    <a href="${url}" download class="lb-btn dl" onclick="toast('Downloading…')">
+      <i class="fas fa-download"></i> Download
+    </a>
+    <button class="lb-btn cl" onclick="closeLightbox()">
+      <i class="fas fa-xmark"></i> Close
+    </button>`;
+
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('open');
+  document.getElementById('lb-content').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+// ─────────────────────────────────────────────────────────
+//  ADMIN PIN GATE
+// ─────────────────────────────────────────────────────────
+function openAdminGate() {
+  ['p1','p2','p3','p4'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('pin-error').style.display = 'none';
+  document.getElementById('pin-gate').classList.add('open');
+  setTimeout(() => document.getElementById('p1').focus(), 100);
+}
+function closePinGate() {
+  document.getElementById('pin-gate').classList.remove('open');
+}
+function pinNext(el, nextId) {
+  if (el.value && nextId) document.getElementById(nextId).focus();
+  if (!nextId) checkPin();
+}
+function pinBack(e, el, prevId) {
+  if (e.key === 'Backspace' && !el.value && prevId) document.getElementById(prevId).focus();
+}
+function checkPin() {
+  const entered = ['p1','p2','p3','p4'].map(id => document.getElementById(id).value).join('');
+  if (entered === ADMIN_PIN) {
+    closePinGate();
+    openAdmin();
+  } else {
+    document.getElementById('pin-error').style.display = 'block';
+    ['p1','p2','p3','p4'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('p1').focus();
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  ADMIN PANEL
+// ─────────────────────────────────────────────────────────
+function openAdmin() {
+  document.getElementById('ad-notice').value  = DATA.notice?.text || '';
+  document.getElementById('ad-expiry').value  = DATA.notice?.expiry || 'never';
+  document.getElementById('ad-name').value    = DATA.profile?.name || '';
+  document.getElementById('ad-bio').value     = DATA.profile?.bio || '';
+  document.getElementById('ad-avatar').value  = DATA.profile?.avatarUrl || '';
+  document.getElementById('admin-overlay').classList.add('open');
+}
+function closeAdmin() {
+  document.getElementById('admin-overlay').classList.remove('open');
+}
+function saveAdmin() {
+  const notice = {
+    text:     document.getElementById('ad-notice').value.trim(),
+    expiry:   document.getElementById('ad-expiry').value,
+    postedAt: new Date().toISOString()
+  };
+  const profile = {
+    name:      document.getElementById('ad-name').value.trim(),
+    bio:       document.getElementById('ad-bio').value.trim(),
+    avatarUrl: document.getElementById('ad-avatar').value.trim()
+  };
+
+  DATA.notice  = notice;
+  DATA.profile = { ...DATA.profile, ...profile };
+
+  // Persist overlay in localStorage
+  localStorage.setItem('adminOverlay', JSON.stringify({ notice, profile }));
+
+  applyNoticeExpiry();
+  renderProfile();
+  closeAdmin();
+  toast('Changes saved!');
+}
+
+// ─────────────────────────────────────────────────────────
+//  TOAST
+// ─────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('toast-msg').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ─────────────────────────────────────────────────────────
+//  CLOSE OVERLAYS ON BACKDROP CLICK
+// ─────────────────────────────────────────────────────────
+document.getElementById('admin-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAdmin();
+});
+document.getElementById('pin-gate').addEventListener('click', function(e) {
+  if (e.target === this) closePinGate();
+});
+
+// ─────────────────────────────────────────────────────────
+//  START
+// ─────────────────────────────────────────────────────────
+init();
+
+// ── FONT AWESOME DETECTION ──────────────────────────────
+(function(){
+  function testFA(){
+    const span = document.createElement('span');
+    span.className = 'fas fa-house';
+    span.style.cssText = 'position:absolute;left:-9999px;font-size:16px';
+    document.body.appendChild(span);
+    const w = span.offsetWidth;
+    document.body.removeChild(span);
+    return w > 0;
+  }
+  window.addEventListener('load', function(){
+    if(!testFA()){
+      // FA not loaded — show emoji fallbacks
+      document.querySelectorAll('.nav-icon i').forEach(i => i.style.display='none');
+      document.querySelectorAll('.nav-icon em').forEach(e => e.style.display='block');
+      // topbar icons
+      document.querySelectorAll('#topbar button i').forEach(i => {
+        const map = {'fa-bars':'☰','fa-search':'🔍','fa-ellipsis-vertical':'⋮'};
+        for(const [cls,em] of Object.entries(map)){
+          if(i.classList.contains(cls)){ i.parentElement.textContent=em; break; }
+        }
+      });
+    }
+  });
+})();
+
+</script>
+</body>
+</html>
